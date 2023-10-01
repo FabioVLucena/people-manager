@@ -29,7 +29,7 @@ public class PersonAddress {
 	@Column(name = "number", nullable = true, unique = false)
 	private String number;
 
-	// THIS SHOULD BE AN ENTITY
+	// IA SER LEGAL SE ISSO FOSSE UMA TABELA
 	@Column(name = "city", nullable = false, unique = false)
 	private String city;
 
