@@ -1,7 +1,9 @@
 package com.attornatus.peoplemanager.controller;
 
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.attornatus.peoplemanager.dto.PersonRequestDTO;
 import com.attornatus.peoplemanager.entity.Person;
 import com.attornatus.peoplemanager.service.PersonService;
 
@@ -41,18 +44,15 @@ public class PersonController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
-		
-		person.setBirthDate(new Date());
-		
-		this.personService.createPerson(person);
+	public ResponseEntity<Person> createPerson(@RequestBody @Valid PersonRequestDTO personDTO) throws ParseException {
+		Person person = this.personService.createPerson(personDTO);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(person);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Person> updatePerson(@PathVariable Long id, @RequestBody Person person) throws Exception {
-		this.personService.updatePerson(id, person);
+	public ResponseEntity<Person> updatePerson(@PathVariable Long id, @RequestBody @Valid PersonRequestDTO personDTO) throws Exception {
+		Person person = this.personService.updatePerson(id, personDTO);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(person);
 	}
