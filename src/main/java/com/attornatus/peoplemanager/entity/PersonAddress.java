@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name = "people_address")
-public class PeopleAddress {
+@Entity(name = "person_address")
+public class PersonAddress {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,8 @@ public class PeopleAddress {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "people_id", referencedColumnName = "id")
-	private People people;
+	@JoinColumn(name = "person_id", referencedColumnName = "id")
+	private Person person;
 
 	@Column(name = "address", nullable = false, unique = false)
 	private String address;
@@ -41,12 +41,12 @@ public class PeopleAddress {
 		this.id = id;
 	}
 
-	public People getPeople() {
-		return people;
+	public Person getPeople() {
+		return person;
 	}
 
-	public void setPeople(People people) {
-		this.people = people;
+	public void setPeople(Person people) {
+		this.person = people;
 	}
 
 	public String getAddress() {
