@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.attornatus.peoplemanager.dto.PersonAddressRequestDTO;
 import com.attornatus.peoplemanager.entity.Person;
 import com.attornatus.peoplemanager.entity.PersonAddress;
 import com.attornatus.peoplemanager.exception.WarningException;
@@ -16,7 +17,6 @@ import com.attornatus.peoplemanager.repository.PersonAddressRepository;
 public class PersonAddressService {
 
 	private PersonService personService;
-	
 	private PersonAddressRepository personAddressRepository;
 
 	public PersonAddressService(PersonService personService, PersonAddressRepository personAddressRepository) {
@@ -34,9 +34,11 @@ public class PersonAddressService {
 	}
 	
 	@Transactional(readOnly = false)
-	public PersonAddress createPersonAddress(Long personId, PersonAddress personAddress) throws WarningException {
+	public PersonAddress createPersonAddress(Long personId, PersonAddressRequestDTO personAddressDTO) throws WarningException {
 		// VALIDA SE A PESSOA EXISTE
 		Person person = this.personService.getPersonById(personId);
+		
+		PersonAddress personAddress = personAddressDTO.convertToEntity();
 		personAddress.setPerson(person);
 		
 		Integer main = personAddress.getMain();

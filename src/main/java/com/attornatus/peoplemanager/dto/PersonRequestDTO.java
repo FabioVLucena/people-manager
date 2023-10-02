@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.attornatus.peoplemanager.entity.Person;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PersonRequestDTO {
@@ -39,6 +40,8 @@ public class PersonRequestDTO {
 	
 	public Person convertToEntity() throws ParseException {
 		ObjectMapper objMapper = new ObjectMapper();
+		objMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		
 		Person person = objMapper.convertValue(this, Person.class);
 
 		String birthDateStr = this.getBirthDateStr();

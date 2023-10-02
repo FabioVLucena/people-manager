@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.attornatus.peoplemanager.dto.PersonAddressRequestDTO;
+import com.attornatus.peoplemanager.dto.PersonAddressResponseDTO;
 import com.attornatus.peoplemanager.dto.PersonRequestDTO;
 import com.attornatus.peoplemanager.entity.Person;
 import com.attornatus.peoplemanager.entity.PersonAddress;
@@ -64,32 +66,40 @@ public class PersonController {
 	}
 	
 	@PostMapping("/{id}/addresses")
-	public ResponseEntity<PersonAddress> createPersonAddress(@PathVariable Long id, @RequestBody PersonAddress personAddress) {
-		this.personAddressService.createPersonAddress(id, personAddress);
+	public ResponseEntity<PersonAddressResponseDTO> createPersonAddress(@PathVariable Long id, @RequestBody @Valid PersonAddressRequestDTO personAddressDTO) {
+		PersonAddress personAddress = this.personAddressService.createPersonAddress(id, personAddressDTO);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(personAddress);
+		PersonAddressResponseDTO responseDTO = PersonAddressResponseDTO.convertToDTO(personAddress);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
 	}
 	
 	@GetMapping("/{id}/addresses")
-	public ResponseEntity<List<PersonAddress>> findAllPersonAddressByPersonId(@PathVariable Long id) {
+	public ResponseEntity<List<PersonAddressResponseDTO>> findAllPersonAddressByPersonId(@PathVariable Long id) {
 		List<PersonAddress> personAddressList = 
 				this.personAddressService.findAllPersonAddressByPersonId(id);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(personAddressList);
+		List<PersonAddressResponseDTO> responseDTO = PersonAddressResponseDTO.convertToDTO(personAddressList);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
 	}
 	
 	@GetMapping("/{id}/addresses/main")
-	public ResponseEntity<PersonAddress> getMainPersonAddress(@PathVariable Long id) {
+	public ResponseEntity<PersonAddressResponseDTO> getMainPersonAddress(@PathVariable Long id) {
 		PersonAddress personAddress = this.personAddressService.getMainPersonAddressByPersonId(id);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(personAddress);
+		PersonAddressResponseDTO responseDTO = PersonAddressResponseDTO.convertToDTO(personAddress);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
 	}
 	
 	@PutMapping("/{id}/addresses/{detailid}/main")
-	public ResponseEntity<PersonAddress> setMainPersonAddress(@PathVariable Long detailid) {
+	public ResponseEntity<PersonAddressResponseDTO> setMainPersonAddress(@PathVariable Long detailid) {
 		PersonAddress personAddress = this.personAddressService.setMainPersonAdress(detailid);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(personAddress);
+		PersonAddressResponseDTO responseDTO = PersonAddressResponseDTO.convertToDTO(personAddress);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
 	}
 	
 }
