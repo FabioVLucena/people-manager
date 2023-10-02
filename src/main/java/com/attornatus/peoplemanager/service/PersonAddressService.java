@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.attornatus.peoplemanager.dto.PersonAddressRequestDTO;
 import com.attornatus.peoplemanager.entity.Person;
 import com.attornatus.peoplemanager.entity.PersonAddress;
+import com.attornatus.peoplemanager.enums.MainEnum;
 import com.attornatus.peoplemanager.exception.WarningException;
 import com.attornatus.peoplemanager.repository.PersonAddressRepository;
 
@@ -42,7 +43,7 @@ public class PersonAddressService {
 		personAddress.setPerson(person);
 		
 		Integer main = personAddress.getMain();
-		if (main.equals(1)) changeOldMainAddress(personId);
+		if (main.equals(MainEnum.YES)) changeOldMainAddress(personId);
 		
 		this.personAddressRepository.save(personAddress);
 
@@ -80,7 +81,7 @@ public class PersonAddressService {
 
 		changeOldMainAddress(personId);
 
-		newMainPersonAddress.setMain(1);
+		newMainPersonAddress.setMain(MainEnum.YES);
 
 		this.personAddressRepository.save(newMainPersonAddress);
 		
@@ -92,7 +93,7 @@ public class PersonAddressService {
 		try {
 			// ALTERA O ANTIGO ENDERECO PRINCIPAL
 			PersonAddress oldMainPersonAddress = getMainPersonAddressByPersonId(personId);
-			oldMainPersonAddress.setMain(0);
+			oldMainPersonAddress.setMain(MainEnum.NO);
 			
 			this.personAddressRepository.save(oldMainPersonAddress);
 		} catch (WarningException e) {
