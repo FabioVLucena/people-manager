@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.attornatus.peoplemanager.entity.PersonAddress;
+import com.attornatus.peoplemanager.enums.MainEnum;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -74,7 +75,7 @@ public class PersonAddressResponseDTO {
 		objMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
 		Integer main = personAddress.getMain();
-		String mainStr = main.equals(1) ? "Yes" : "No";
+		String mainStr = main.equals(MainEnum.YES) ? MainEnum.YES_STR : MainEnum.NO_STR;
 		
 		PersonAddressResponseDTO personAddressDTO = objMapper.convertValue(personAddress, PersonAddressResponseDTO.class); 
 		personAddressDTO.setMainStr(mainStr);
@@ -89,7 +90,7 @@ public class PersonAddressResponseDTO {
 		List<PersonAddressResponseDTO> personAddressDTOList = new ArrayList<PersonAddressResponseDTO>();
 		for (PersonAddress personAddress : personAddressList) {
 			Integer main = personAddress.getMain();
-			String mainStr = main.equals(1) ? "Yes" : "No";
+			String mainStr = main.equals(MainEnum.YES) ? MainEnum.YES_STR : MainEnum.NO_STR;
 			
 			PersonAddressResponseDTO personAddressDTO = objMapper.convertValue(personAddress, PersonAddressResponseDTO.class);
 			personAddressDTO.setMainStr(mainStr);
