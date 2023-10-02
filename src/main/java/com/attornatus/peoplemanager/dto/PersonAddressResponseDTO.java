@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PersonAddressResponseDTO {
 
+	private Long id;
+	
 	private String address;
 	
 	private String cep;
@@ -19,6 +21,14 @@ public class PersonAddressResponseDTO {
 
 	private String city;
 
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getAddress() {
 		return address;
 	}
