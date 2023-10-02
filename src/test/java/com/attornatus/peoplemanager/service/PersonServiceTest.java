@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.text.ParseException;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -59,6 +60,18 @@ public class PersonServiceTest {
 		
 		assertNotEquals(person.getName(), newPerson.getName());
 		assertNotEquals(person.getBirthDate(), newPerson.getBirthDate());
+	}
+
+	@Test
+	void shouldReturnPersonWithStartNameC() {
+		List<Person> personList = this.personService.findPersonsByNameLike("C");
+		for (Person person : personList) {
+			String name = person.getName();
+			
+			if (name.startsWith("C") == false) {
+				fail("Should have brought people with names that start with C");
+			}
+		}
 	}
 	
 }
