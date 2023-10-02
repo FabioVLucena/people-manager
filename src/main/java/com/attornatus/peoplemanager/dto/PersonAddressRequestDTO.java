@@ -20,7 +20,7 @@ public class PersonAddressRequestDTO {
 	private String number;
 	
 	@Min(value = 0, message = "Main must be 1 to true or 0 to false")
-	@Max(value = 1, message = "Main must be 1 to true and 0 to false")
+	@Max(value = 1, message = "Main must be 1 to true or 0 to false")
 	@NotNull(message = "Main must be 1 to true or 0 to false")
 	private Integer main;
 
