@@ -1,7 +1,14 @@
 package com.attornatus.peoplemanager.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import com.attornatus.peoplemanager.entity.Person;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PersonRequestDTO {
 
@@ -28,6 +35,20 @@ public class PersonRequestDTO {
 
 	public void setBirthDateStr(String birthDate) {
 		this.birthDateStr = birthDate;
+	}
+	
+	public Person convertToEntity() throws ParseException {
+		ObjectMapper objMapper = new ObjectMapper();
+		Person person = objMapper.convertValue(this, Person.class);
+
+		String birthDateStr = this.getBirthDateStr();
+		
+		SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date birthDate = dataFormat.parse(birthDateStr);
+		
+		person.setBirthDate(birthDate);
+		
+		return person;
 	}
 	
 }

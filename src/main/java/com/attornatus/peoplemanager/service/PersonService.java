@@ -1,8 +1,6 @@
 package com.attornatus.peoplemanager.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,16 +11,13 @@ import com.attornatus.peoplemanager.dto.PersonRequestDTO;
 import com.attornatus.peoplemanager.entity.Person;
 import com.attornatus.peoplemanager.exception.WarningException;
 import com.attornatus.peoplemanager.repository.PersonRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class PersonService {
 
-	private ObjectMapper objMapper;
 	private PersonRepository personRepository;
 	
-	public PersonService(PersonRepository peopleRepository, ObjectMapper objMapper) {
-		this.objMapper = objMapper;
+	public PersonService(PersonRepository peopleRepository) {
 		this.personRepository = peopleRepository;
 	}
 
@@ -44,13 +39,7 @@ public class PersonService {
 	
 	@Transactional(readOnly = false)
 	public Person createPerson(PersonRequestDTO personDTO) throws ParseException {
-		Person person = this.objMapper.convertValue(personDTO, Person.class);
-
-		String birthDateStr = personDTO.getBirthDateStr();
-		SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Date birthDate = dataFormat.parse(birthDateStr);
-		
-		person.setBirthDate(birthDate);
+		Person person = personDTO.convertToEntity();
 		
 		this.personRepository.save(person);	
 		
@@ -62,14 +51,8 @@ public class PersonService {
 		// VALIDA SE A PESSOA EXISTE
 		getPersonById(id);
 		
-		Person person = this.objMapper.convertValue(personDTO, Person.class);
+		Person person = personDTO.convertToEntity();
 		person.setId(id);
-		
-		String birthDateStr = personDTO.getBirthDateStr();
-		SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Date birthDate = dataFormat.parse(birthDateStr);
-		
-		person.setBirthDate(birthDate);
 		
 		this.personRepository.save(person);
 		
