@@ -26,6 +26,9 @@ public class PersonAddress {
 	@Column(name = "cep", nullable = true, unique = false)
 	private String cep;
 	
+	@Column(name = "main", length = 1, nullable = false, unique = false)
+	private Integer main;
+	
 	@Column(name = "number", nullable = true, unique = false)
 	private String number;
 
@@ -41,12 +44,12 @@ public class PersonAddress {
 		this.id = id;
 	}
 
-	public Person getPeople() {
+	public Person getPerson() {
 		return person;
 	}
 
-	public void setPeople(Person people) {
-		this.person = people;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	public String getAddress() {
@@ -65,6 +68,14 @@ public class PersonAddress {
 		this.cep = cep;
 	}
 
+	public Integer getMain() {
+		return main;
+	}
+
+	public void setMain(Integer main) {
+		this.main = main;
+	}
+	
 	public String getNumber() {
 		return number;
 	}

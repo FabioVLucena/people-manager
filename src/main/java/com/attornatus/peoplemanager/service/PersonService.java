@@ -27,7 +27,7 @@ public class PersonService {
 	}
 
 	@Transactional(readOnly = true)
-	public Person getPersonById(Long id) throws Exception {
+	public Person getPersonById(Long id) throws WarningException {
 		Optional<Person> optPerson = this.personRepository.findById(id);
 		
 		Person person = optPerson.orElseThrow(() -> new WarningException("Person not found"));
@@ -58,7 +58,7 @@ public class PersonService {
 	}
 	
 	@Transactional(readOnly = false)
-	public Person updatePerson(Long id, PersonRequestDTO personDTO) throws Exception {
+	public Person updatePerson(Long id, PersonRequestDTO personDTO) throws WarningException, ParseException {
 		// VALIDA SE A PESSOA EXISTE
 		getPersonById(id);
 		
