@@ -37,6 +37,13 @@ public class PersonService {
 		return personList;
 	}
 	
+	@Transactional(readOnly = true)
+	public List<Person> findPersonsByNameLike(String name) {
+		List<Person> personList = this.personRepository.findByNameLike(name);
+		
+		return personList;
+	}
+	
 	@Transactional(readOnly = false)
 	public Person createPerson(PersonRequestDTO personDTO) throws ParseException {
 		Person person = personDTO.convertToEntity();
