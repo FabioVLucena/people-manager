@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.attornatus.peoplemanager.dto.PersonAddressRequestDTO;
@@ -47,6 +48,13 @@ public class PersonController {
 	@GetMapping
 	public ResponseEntity<List<Person>> findAllPersons() {
 		List<Person> personList = this.personService.findAllPersons();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(personList);
+	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<List<Person>> findPersonsByNameLike(@RequestParam String name) {
+		List<Person> personList = this.personService.findPersonsByNameLike(name);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(personList);
 	}
