@@ -22,6 +22,12 @@ public class Person {
 	@Column(name = "birth_date", nullable = false, unique = false)
 	private Date birthDate;
 	
+	public Person() { /***/ }
+	
+	public Person(Long id) {
+		this.id = id;
+	}
+	
 	public Long getId() {
 		return id;
 	}
