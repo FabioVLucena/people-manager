@@ -25,6 +25,8 @@ import com.attornatus.peoplemanager.exception.WarningException;
 import com.attornatus.peoplemanager.service.PersonAddressService;
 import com.attornatus.peoplemanager.service.PersonService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/v1/persons")
 public class PersonController {
@@ -38,6 +40,7 @@ public class PersonController {
 		this.personAddressService = personAddressService;
 	}
 	
+	@Operation(summary = "Get a person by its id")
 	@GetMapping("/{id}")
 	public ResponseEntity<Person> getPersonById(@PathVariable Long id) throws WarningException {
 		Person person = this.personService.getPersonById(id);
@@ -45,6 +48,7 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.OK).body(person);
 	}
 	
+	@Operation(summary = "Get the list of all persons")
 	@GetMapping
 	public ResponseEntity<List<Person>> findAllPersons() {
 		List<Person> personList = this.personService.findAllPersons();
@@ -52,6 +56,7 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.OK).body(personList);
 	}
 	
+	@Operation(summary = "Get the list of all persons with name like search")
 	@GetMapping("/search")
 	public ResponseEntity<List<Person>> findPersonsByNameLike(@RequestParam String name) {
 		List<Person> personList = this.personService.findPersonsByNameLike(name);
@@ -59,6 +64,7 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.OK).body(personList);
 	}
 	
+	@Operation(summary = "Creates a new person")
 	@PostMapping
 	public ResponseEntity<Person> createPerson(@RequestBody @Valid PersonRequestDTO personDTO) throws ParseException {
 		Person person = this.personService.createPerson(personDTO);
@@ -66,6 +72,7 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(person);
 	}
 	
+	@Operation(summary = "Update a person's data")
 	@PutMapping("/{id}")
 	public ResponseEntity<Person> updatePerson(@PathVariable Long id, @RequestBody @Valid PersonRequestDTO personDTO) throws WarningException, ParseException {
 		Person person = this.personService.updatePerson(id, personDTO);
@@ -73,6 +80,7 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.OK).body(person);
 	}
 	
+	@Operation(summary = "Creates a new person address")
 	@PostMapping("/{id}/addresses")
 	public ResponseEntity<PersonAddressResponseDTO> createPersonAddress(@PathVariable Long id, @RequestBody @Valid PersonAddressRequestDTO personAddressDTO) {
 		PersonAddress personAddress = this.personAddressService.createPersonAddress(id, personAddressDTO);
@@ -82,6 +90,7 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
 	}
 	
+	@Operation(summary = "Get a list of all a person's addresses")
 	@GetMapping("/{id}/addresses")
 	public ResponseEntity<List<PersonAddressResponseDTO>> findAllPersonAddressByPersonId(@PathVariable Long id) {
 		List<PersonAddress> personAddressList = 
@@ -92,6 +101,7 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
 	}
 	
+	@Operation(summary = "Get the person's main address")
 	@GetMapping("/{id}/addresses/main")
 	public ResponseEntity<PersonAddressResponseDTO> getMainPersonAddress(@PathVariable Long id) {
 		PersonAddress personAddress = this.personAddressService.getMainPersonAddressByPersonId(id);
@@ -101,6 +111,7 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
 	}
 	
+	@Operation(summary = "Change the person's main address")
 	@PutMapping("/{id}/addresses/{detailid}/main")
 	public ResponseEntity<PersonAddressResponseDTO> setMainPersonAddress(@PathVariable Long detailid) {
 		PersonAddress personAddress = this.personAddressService.setMainPersonAdress(detailid);
