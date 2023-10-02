@@ -67,7 +67,6 @@ public class PersonAddressServiceTest {
 		this.personAddressService.createPersonAddress(personId, personAddressDTO);
 		this.personAddressService.createPersonAddress(personId, personAddressDTO);
 		
-		// SE NAO DER ERRO AQUI ENTAO SÓ TEM 1 REGISTRO
 		this.personAddressService.getMainPersonAddressByPersonId(personId);
 	}
 
