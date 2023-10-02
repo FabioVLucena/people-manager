@@ -55,7 +55,6 @@ public class PersonService {
 	
 	@Transactional(readOnly = false)
 	public Person updatePerson(Long id, PersonRequestDTO personDTO) throws WarningException, ParseException {
-		// VALIDA SE A PESSOA EXISTE
 		getPersonById(id);
 		
 		Person person = personDTO.convertToEntity();

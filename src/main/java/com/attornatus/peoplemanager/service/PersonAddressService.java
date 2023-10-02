@@ -36,7 +36,6 @@ public class PersonAddressService {
 	
 	@Transactional(readOnly = false)
 	public PersonAddress createPersonAddress(Long personId, PersonAddressRequestDTO personAddressDTO) throws WarningException {
-		// VALIDA SE A PESSOA EXISTE
 		Person person = this.personService.getPersonById(personId);
 		
 		PersonAddress personAddress = personAddressDTO.convertToEntity();
@@ -52,7 +51,6 @@ public class PersonAddressService {
 	
 	@Transactional(readOnly = true)
 	public List<PersonAddress> findAllPersonAddressByPersonId(Long personId) {
-		// VALIDA SE A PESSOA EXISTE
 		this.personService.getPersonById(personId);
 		
 		List<PersonAddress> personAddressList = 
@@ -72,11 +70,9 @@ public class PersonAddressService {
 	
 	@Transactional(readOnly = false)
 	public PersonAddress setMainPersonAdress(Long id) {
-		// VALIDA SE O ENDERECO EXISTE
 		PersonAddress newMainPersonAddress = getPersonAddressById(id);
 		Long personId = newMainPersonAddress.getPerson().getId();
 		
-		// VALIDA SE A PESSOA EXISTE
 		this.personService.getPersonById(personId);
 
 		changeOldMainAddress(personId);
@@ -91,14 +87,10 @@ public class PersonAddressService {
 	@Transactional(readOnly = false)
 	private void changeOldMainAddress(Long personId) {
 		try {
-			// ALTERA O ANTIGO ENDERECO PRINCIPAL
 			PersonAddress oldMainPersonAddress = getMainPersonAddressByPersonId(personId);
 			oldMainPersonAddress.setMain(MainEnum.NO);
 			
 			this.personAddressRepository.save(oldMainPersonAddress);
-		} catch (WarningException e) {
-			// SE NAO ENCONTRAR ALGUM ENDERECO PRINCIPAL
-			// ENTAO SEGUE O JOGO
-		}
+		} catch (WarningException e) { }
 	}
 }
