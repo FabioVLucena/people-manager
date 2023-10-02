@@ -27,6 +27,10 @@ cd people-manager
 ./mvnw spring-boot:run
 ```
 
+# Como utilizar a API
+
+http://localhost:8080/swagger-ui.html
+
 # Autor
 
 Fabio Vital Lucena da Silva
